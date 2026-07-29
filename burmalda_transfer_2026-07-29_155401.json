@@ -881,6 +881,10 @@
       "protocol": "blackhole"
     }
   ],
+	"remarks": "20in1",
+"meta": {
+  "serverDescription": "⚡ Подбор наименьшего пинга ⚡"
+},
   "burstObservatory": {
     "pingConfig": {
       "timeout": "3s",
