@@ -46,7 +46,9 @@
           "domain:avito.ru",
           "domain:2gis.ru",
           "domain:mail.ru",
-          "domain:tbank.com"
+          "domain:tbank.com",
+          "domain:sberbank.com",
+          "domain:gosuslugi.ru"
         ],
         "outboundTag": "direct"
       },
@@ -60,7 +62,7 @@
     "balancers": [
       {
         "tag": "whitelist_balancer",
-        "selector": ["proxy", "proxy-3", "proxy-10"],
+        "selector": ["proxy", "proxy-3", "proxy-10", "proxy-11", "proxy-12", "proxy-13", "proxy-14", "proxy-15"],
         "strategy": {
           "type": "leastLoad",
           "settings": {
@@ -216,6 +218,221 @@
       }
     },
     {
+      "tag": "proxy-11",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cdnvideo.nimarko.org",
+            "port": 443,
+            "users": [
+              {
+                "id": "f9fe8cb4-1d95-4b35-81bc-d1b713e532ac",
+                "encryption": "none",
+                "flow": ""
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "xhttpSettings": {
+          "mode": "packet-up",
+          "host": "cdnvideo.nimarko.org",
+          "path": "/static/getFile/video/segment.ts/latvia/",
+          "extra": {
+            "mode": "packet-up",
+            "path": "/static/getFile/video/segment.ts/latvia/",
+            "xPaddingKey": "_dc",
+            "xPaddingHeader": "Referer",
+            "xPaddingMethod": "tokenish",
+            "uplinkHTTPMethod": "GET",
+            "xPaddingObfsMode": true,
+            "xPaddingPlacement": "queryInHeader"
+          }
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "cdnvideo.nimarko.org",
+          "fingerprint": "edge",
+          "alpn": ["h2", "http/1.1"]
+        }
+      }
+    },
+    {
+      "tag": "proxy-12",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cdnvideo.nimarko.org",
+            "port": 443,
+            "users": [
+              {
+                "id": "f9fe8cb4-1d95-4b35-81bc-d1b713e532ac",
+                "encryption": "none",
+                "flow": ""
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "xhttpSettings": {
+          "mode": "packet-up",
+          "host": "cdnvideo.nimarko.org",
+          "path": "/static/getFile/video/segment.ts/spain/",
+          "extra": {
+            "mode": "packet-up",
+            "path": "/static/getFile/video/segment.ts/spain/",
+            "xPaddingKey": "_dc",
+            "xPaddingHeader": "Referer",
+            "xPaddingMethod": "tokenish",
+            "uplinkHTTPMethod": "GET",
+            "xPaddingObfsMode": true,
+            "xPaddingPlacement": "queryInHeader"
+          }
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "cdnvideo.nimarko.org",
+          "fingerprint": "edge",
+          "alpn": ["h2", "http/1.1"]
+        }
+      }
+    },
+    {
+      "tag": "proxy-13",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cdnvideo.nimarko.org",
+            "port": 443,
+            "users": [
+              {
+                "id": "f9fe8cb4-1d95-4b35-81bc-d1b713e532ac",
+                "encryption": "none",
+                "flow": ""
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "xhttpSettings": {
+          "mode": "packet-up",
+          "host": "cdnvideo.nimarko.org",
+          "path": "/static/getFile/video/segment.ts/netherlands-3/",
+          "extra": {
+            "mode": "packet-up",
+            "path": "/static/getFile/video/segment.ts/netherlands-3/",
+            "xPaddingKey": "_dc",
+            "xPaddingHeader": "Referer",
+            "xPaddingMethod": "tokenish",
+            "uplinkHTTPMethod": "GET",
+            "xPaddingObfsMode": true,
+            "xPaddingPlacement": "queryInHeader"
+          }
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "cdnvideo.nimarko.org",
+          "fingerprint": "edge",
+          "alpn": ["h2", "http/1.1"]
+        }
+      }
+    },
+    {
+      "tag": "proxy-14",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cdnvideo.nimarko.org",
+            "port": 443,
+            "users": [
+              {
+                "id": "f9fe8cb4-1d95-4b35-81bc-d1b713e532ac",
+                "encryption": "none",
+                "flow": ""
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "xhttpSettings": {
+          "mode": "packet-up",
+          "host": "cdnvideo.nimarko.org",
+          "path": "/static/getFile/video/segment.ts/netherlands-4/",
+          "extra": {
+            "mode": "packet-up",
+            "path": "/static/getFile/video/segment.ts/netherlands-4/",
+            "xPaddingKey": "_dc",
+            "xPaddingHeader": "Referer",
+            "xPaddingMethod": "tokenish",
+            "uplinkHTTPMethod": "GET",
+            "xPaddingObfsMode": true,
+            "xPaddingPlacement": "queryInHeader"
+          }
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "cdnvideo.nimarko.org",
+          "fingerprint": "edge",
+          "alpn": ["h2", "http/1.1"]
+        }
+      }
+    },
+    {
+      "tag": "proxy-15",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cdnvideo.nimarko.org",
+            "port": 443,
+            "users": [
+              {
+                "id": "f9fe8cb4-1d95-4b35-81bc-d1b713e532ac",
+                "encryption": "none",
+                "flow": ""
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "xhttpSettings": {
+          "mode": "packet-up",
+          "host": "cdnvideo.nimarko.org",
+          "path": "/static/getFile/video/segment.ts/sweden/",
+          "extra": {
+            "mode": "packet-up",
+            "path": "/static/getFile/video/segment.ts/sweden/",
+            "xPaddingKey": "_dc",
+            "xPaddingHeader": "Referer",
+            "xPaddingMethod": "tokenish",
+            "uplinkHTTPMethod": "GET",
+            "xPaddingObfsMode": true,
+            "xPaddingPlacement": "queryInHeader"
+          }
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "cdnvideo.nimarko.org",
+          "fingerprint": "edge",
+          "alpn": ["h2", "http/1.1"]
+        }
+      }
+    },
+    {
       "tag": "direct",
       "protocol": "freedom"
     },
@@ -236,6 +453,6 @@
   },
   "remarks": "🇪🇺🛡️ ОБХОД БЕЛЫХ СПИСКОВ",
   "meta": {
-    "serverDescription": "Только Reality и XHTTP"
+    "serverDescription": "8 прокси | Reality + XHTTP"
   }
 }
