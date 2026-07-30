@@ -1,3 +1,223 @@
-vless://f9fe8cb4-1d95-4b35-81bc-d1b713e532ac@pols.nimarko.org:4443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=pols.nimarko.org&fp=firefox&pbk=IjhCLRnZkoSPYn-QVUyTV4-7wOLgxii2i0Aabk9tMkI&type=tcp#proxy
-vless://f9fe8cb4-1d95-4b35-81bc-d1b713e532ac@cdnvideo.nimarko.org:443?encryption=none&security=tls&sni=cdnvideo.nimarko.org&fp=edge&alpn=h2%2Chttp%2F1.1&type=xhttp&mode=packet-up&host=cdnvideo.nimarko.org&path=%2Fstatic%2FgetFile%2Fvideo%2Fsegment.ts%2Fitaly%2F#proxy-3
-vless://f9fe8cb4-1d95-4b35-81bc-d1b713e532ac@cdnvideo.nimarko.org:443?encryption=none&security=tls&sni=cdnvideo.nimarko.org&fp=edge&alpn=h2%2Chttp%2F1.1&type=xhttp&mode=packet-up&host=cdnvideo.nimarko.org&path=%2Fstatic%2FgetFile%2Fvideo%2Fsegment.ts%2Fgreece%2F#proxy-10
+{
+  "dns": {
+    "servers": [
+      "1.1.1.1",
+      "1.0.0.1"
+    ],
+    "queryStrategy": "UseIP"
+  },
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "protocol": [
+          "bittorrent"
+        ],
+        "outboundTag": "direct"
+      }
+    ],
+    "domainMatcher": "hybrid",
+    "domainStrategy": "IPIfNonMatch"
+  },
+  "inbounds": [
+    {
+      "tag": "socks",
+      "port": 10808,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "udp": true,
+        "auth": "noauth"
+      },
+      "sniffing": {
+        "enabled": true,
+        "routeOnly": false,
+        "destOverride": [
+          "http",
+          "tls",
+          "quic"
+        ]
+      }
+    },
+    {
+      "tag": "http",
+      "port": 10809,
+      "listen": "127.0.0.1",
+      "protocol": "http",
+      "settings": {
+        "allowTransparent": false,
+        "auth": "noauth"
+      },
+      "sniffing": {
+        "enabled": true,
+        "routeOnly": false,
+        "destOverride": [
+          "http",
+          "tls",
+          "quic"
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "proxy",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "mix.streetcube-summer.ru",
+            "port": 443,
+            "users": [
+              {
+                "id": "d2b9f388-9d85-47c0-9263-1bf037c8efc1",
+                "encryption": "none",
+                "flow": ""
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/api/84514a27/e4f211/174d5ba61253",
+          "headers": {
+            "Host": "mix.streetcube-summer.ru"
+          }
+        },
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "mix.streetcube-summer.ru",
+          "allowInsecure": false,
+          "show": false,
+          "fingerprint": "firefox",
+          "alpn": [
+            "http/1.1"
+          ]
+        }
+      }
+    },
+    {
+      "tag": "direct",
+      "protocol": "freedom"
+    },
+    {
+      "tag": "block",
+      "protocol": "blackhole"
+    }
+  ],
+  "remarks": "🇪🇺 LTE #1 | Все операторы 🔥",
+  "log": {
+    "access": "/storage/emulated/0/Android/data/com.happproxy/files/assets/logs/access/access_log.txt",
+    "error": "/storage/emulated/0/Android/data/com.happproxy/files/assets/logs/error/1785407705668_error_log.txt"
+  }
+}
+ =============================================
+{
+  "dns": {
+    "servers": [
+      "1.1.1.1",
+      "1.0.0.1"
+    ],
+    "queryStrategy": "UseIP"
+  },
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "protocol": [
+          "bittorrent"
+        ],
+        "outboundTag": "direct"
+      }
+    ],
+    "domainMatcher": "hybrid",
+    "domainStrategy": "IPIfNonMatch"
+  },
+  "inbounds": [
+    {
+      "tag": "socks",
+      "port": 10808,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "udp": true,
+        "auth": "noauth"
+      },
+      "sniffing": {
+        "enabled": true,
+        "routeOnly": false,
+        "destOverride": [
+          "http",
+          "tls",
+          "quic"
+        ]
+      }
+    },
+    {
+      "tag": "http",
+      "port": 10809,
+      "listen": "127.0.0.1",
+      "protocol": "http",
+      "settings": {
+        "allowTransparent": false,
+        "auth": "noauth"
+      },
+      "sniffing": {
+        "enabled": true,
+        "routeOnly": false,
+        "destOverride": [
+          "http",
+          "tls",
+          "quic"
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "proxy",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "185.91.52.223",
+            "port": 443,
+            "users": [
+              {
+                "id": "d2b9f388-9d85-47c0-9263-1bf037c8efc1",
+                "encryption": "none",
+                "flow": "xtls-rprx-vision"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {},
+        "security": "reality",
+        "realitySettings": {
+          "serverName": "cloud.mail.ru",
+          "show": false,
+          "publicKey": "M5op223qPdEGLY9ubMuTw0D06Bsn9s3LDfGY4FNzBnk",
+          "fingerprint": "firefox"
+        }
+      }
+    },
+    {
+      "tag": "direct",
+      "protocol": "freedom"
+    },
+    {
+      "tag": "block",
+      "protocol": "blackhole"
+    }
+  ],
+  "remarks": "🇪🇺 LTE #2 | Все операторы 🔥",
+  "log": {
+    "access": "/storage/emulated/0/Android/data/com.happproxy/files/assets/logs/access/access_log.txt",
+    "error": "/storage/emulated/0/Android/data/com.happproxy/files/assets/logs/error/1785407730006_error_log.txt"
+  }
+}
