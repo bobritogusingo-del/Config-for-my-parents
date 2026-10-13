@@ -1,157 +1,6 @@
 [
   {
     "dns": {
-      "servers": [
-        "1.1.1.1",
-        "1.0.0.1"
-      ],
-      "queryStrategy": "UseIP"
-    },
-    "routing": {
-      "rules": [
-        {
-          "type": "field",
-          "protocol": [
-            "bittorrent"
-          ],
-          "outboundTag": "direct"
-        }
-      ],
-      "domainMatcher": "hybrid",
-      "domainStrategy": "IPIfNonMatch"
-    },
-    "inbounds": [
-      {
-        "tag": "socks",
-        "port": 10808,
-        "listen": "127.0.0.1",
-        "protocol": "socks",
-        "settings": {
-          "udp": true,
-          "auth": "noauth"
-        },
-        "sniffing": {
-          "enabled": true,
-          "routeOnly": false,
-          "destOverride": [
-            "http",
-            "tls",
-            "quic"
-          ]
-        }
-      },
-      {
-        "tag": "http",
-        "port": 10809,
-        "listen": "127.0.0.1",
-        "protocol": "http",
-        "settings": {
-          "allowTransparent": false
-        },
-        "sniffing": {
-          "enabled": true,
-          "routeOnly": false,
-          "destOverride": [
-            "http",
-            "tls",
-            "quic"
-          ]
-        }
-      }
-    ],
-    "outbounds": [
-      {
-        "tag": "proxy",
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "w.upgrade101.club",
-              "port": 443,
-              "users": [
-                {
-                  "id": "f1c4978f-fcc0-42e2-b3c7-11d5e8aa50e7",
-                  "encryption": "none",
-                  "flow": ""
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/ws-f28c040ba3857b276cc22135",
-            "headers": {
-              "Host": "w.upgrade101.club"
-            }
-          },
-          "security": "tls",
-          "tlsSettings": {
-            "serverName": "w.upgrade101.club",
-            "allowInsecure": false,
-            "show": false,
-            "fingerprint": "firefox",
-            "alpn": [
-              "http/1.1"
-            ]
-          }
-        }
-      },
-      {
-        "tag": "proxy-2",
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "81.163.23.248",
-              "port": 443,
-              "users": [
-                {
-                  "id": "f1c4978f-fcc0-42e2-b3c7-11d5e8aa50e7",
-                  "encryption": "none",
-                  "flow": ""
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/avi/v1/info",
-            "headers": {
-              "Host": "selec248.apruxdomain.website"
-            }
-          },
-          "security": "tls",
-          "tlsSettings": {
-            "serverName": "selec248.apruxdomain.website",
-            "allowInsecure": false,
-            "show": false,
-            "fingerprint": "firefox",
-            "alpn": [
-              "http/1.1"
-            ]
-          }
-        }
-      },
-      {
-        "tag": "direct",
-        "protocol": "freedom"
-      },
-      {
-        "tag": "block",
-        "protocol": "blackhole"
-      }
-    ],
-    "remarks": "🇪🇺 Белые Списки | Auto Locate",
-    "meta": {
-      "serverDescription": "Автовыбор новых ключей"
-    }
-  },
-  {
-    "dns": {
       "tag": "dns_inbound",
       "servers": [
         {
@@ -741,46 +590,70 @@
   },
   {
     "dns": {
-      "tag": "dns_inbound",
+      "hosts": {
+        "dns.quad9.net": [
+          "9.9.9.9",
+          "149.112.112.112"
+        ],
+        "dns.cloudflare.com": [
+          "1.1.1.1",
+          "1.0.0.1"
+        ],
+        "common.dot.dns.yandex.net": [
+          "77.88.8.8",
+          "77.88.8.1"
+        ],
+        "unfiltered.adguard-dns.com": [
+          "94.140.14.140",
+          "94.140.14.141"
+        ]
+      },
       "servers": [
         {
-          "address": "https://77.88.8.8/dns-query",
+          "address": "https://dns.cloudflare.com/dns-query",
+          "timeoutMs": 5000,
+          "queryStrategy": "UseIPv4"
+        },
+        {
+          "address": "https://dns.quad9.net/dns-query",
+          "timeoutMs": 5000,
+          "queryStrategy": "UseIPv4"
+        },
+        {
+          "address": "https://unfiltered.adguard-dns.com/dns-query",
+          "timeoutMs": 5000,
+          "queryStrategy": "UseIPv4"
+        },
+        {
+          "address": "https://8.8.8.8/dns-query",
+          "timeoutMs": 5000,
+          "queryStrategy": "UseIPv4"
+        },
+        {
+          "address": "https://common.dot.dns.yandex.net/dns-query",
           "domains": [
-            "geosite:category-ru",
             "regexp:.*\\.ru$",
             "regexp:.*\\.su$",
             "regexp:.*\\.by$",
             "regexp:.*\\.xn--p1ai$"
-          ]
-        },
-        "https://8.8.8.8/dns-query",
-        "https://1.1.1.1/dns-query"
-      ],
-      "disableCache": false,
-      "queryStrategy": "UseIPv4"
-    },
-    "policy": {
-      "levels": {
-        "0": {
-          "connIdle": 300,
-          "handshake": 4,
-          "bufferSize": 0,
-          "uplinkOnly": 0,
-          "downlinkOnly": 0,
-          "statsUserOnline": true,
-          "statsUserUplink": true,
-          "statsUserDownlink": true
+          ],
+          "timeoutMs": 5000,
+          "serveStale": true,
+          "disableCache": false,
+          "skipFallback": true,
+          "queryStrategy": "UseIPv4",
+          "serveExpiredTTL": 43200,
+          "disableFallbackIfMatch": true
         }
-      },
-      "system": {
-        "statsInboundUplink": true,
-        "statsOutboundUplink": true,
-        "statsInboundDownlink": true,
-        "statsOutboundDownlink": true
-      }
+      ]
     },
     "routing": {
       "rules": [
+        {
+          "port": 53,
+          "type": "field",
+          "outboundTag": "dns-out"
+        },
         {
           "type": "field",
           "protocol": [
@@ -814,7 +687,7 @@
             "domain:push-apple.com.akadns.net",
             "domain:*-courier.push.apple.com"
           ],
-          "outboundTag": "proxy"
+          "balancerTag": "ru_entry"
         },
         {
           "ip": [
@@ -825,59 +698,33 @@
             "17.188.20.0/23"
           ],
           "type": "field",
-          "outboundTag": "proxy"
-        },
-        {
-          "ip": [
-            "91.105.192.0/23",
-            "91.108.20.0/22",
-            "185.76.151.0/24",
-            "91.108.4.0/22",
-            "91.108.8.0/22",
-            "91.108.12.0/22",
-            "91.108.16.0/22",
-            "91.108.56.0/22",
-            "149.154.160.0/20"
-          ],
-          "type": "field",
           "balancerTag": "ru_entry"
         },
         {
           "type": "field",
           "domain": [
             "max.ru",
-            "domain:2gis.ru",
-            "domain:ads.x5.ru",
-            "domain:2gis.com",
             "domain:aif.ru",
             "domain:aeroflot.ru",
-            "domain:alfabank.ru",
             "domain:avito.ru",
-            "domain:beeline.ru",
             "domain:burgerkingrus.ru",
             "domain:dellin.ru",
             "domain:drive2.ru",
-            "domain:dzen.ru",
             "domain:flypobeda.ru",
             "domain:forbes.ru",
             "domain:gazeta.ru",
             "domain:gazprombank.ru",
             "domain:gismeteo.ru",
-            "domain:gosuslugi.ru",
             "domain:hh.ru",
             "domain:kontur.ru",
             "domain:kontur.host",
             "domain:kp.ru",
             "domain:kuper.ru",
             "domain:lenta.ru",
-            "domain:mail.ru",
             "domain:megamarket.ru",
             "domain:megamarket.tech",
-            "domain:megafon.ru",
             "domain:moex.com",
             "domain:motivtelecom.ru",
-            "domain:ozon.ru",
-            "domain:ozone.ru",
             "domain:ozonusercontent.com",
             "domain:ozonapis.com",
             "domain:pervye.ru",
@@ -886,33 +733,21 @@
             "domain:rambler-co.ru",
             "domain:rbc.ru",
             "domain:reg.ru",
-            "domain:reviews.2gis.com",
             "domain:rg.ru",
             "domain:ria.ru",
             "domain:ruwiki.ru",
             "domain:rustore.ru",
-            "domain:rutube.ru",
-            "domain:rzd.ru",
             "domain:sirena-travel.ru",
             "domain:sravni.ru",
             "domain:t-j.ru",
-            "domain:t2.ru",
             "domain:tank-online.com",
             "domain:taximaxim.ru",
             "domain:tbank-online.com",
             "domain:tildaapi.com",
             "domain:tns-counter.ru",
-            "domain:trvl.yandex.net",
             "domain:tutu.ru",
-            "domain:vk.com",
-            "domain:vk.ru",
             "domain:vkvideo.ru",
-            "domain:vtb.ru",
-            "domain:x5.ru",
             "domain:ya.ru",
-            "domain:yandex.ru",
-            "domain:yandex.net",
-            "domain:yandex.com",
             "domain:yastatic.net",
             "domain:yandexcloud.net",
             "full:go.yandex",
@@ -929,8 +764,6 @@
             "domain:st.max.ru",
             "domain:tracker-api.vk-analytics.ru",
             "domain:whitei.net",
-            "domain:wildberries.ru",
-            "domain:wb.ru",
             "domain:wbbasket.ru",
             "domain:wbstatic.net",
             "domain:wbcontent.net",
@@ -938,14 +771,8 @@
             "domain:paywb.com",
             "domain:2gis.io",
             "domain:avito.st",
-            "domain:go.yandex.ru",
             "domain:yastat.net",
             "domain:naydex.net",
-            "domain:music.yandex.ru",
-            "domain:maps.yandex.ru",
-            "domain:api-maps.yandex.ru",
-            "domain:dzeninfra.ru",
-            "domain:kinopoisk.ru",
             "domain:vk-cdn.net",
             "domain:vk-cdn.me",
             "domain:userapi.com",
@@ -955,25 +782,11 @@
             "domain:vkuser.net",
             "domain:mycdn.me",
             "domain:imgsmail.ru",
-            "domain:ok.ru",
-            "domain:okcdn.ru",
             "domain:mail.rambler.ru",
             "domain:more.tv",
             "domain:mos.ru",
             "domain:www.gismeteo.ru",
             "domain:ru.ruwiki.ru",
-            "domain:2gis.ae",
-            "domain:2gis.am",
-            "domain:2gis.az",
-            "domain:2gis.by",
-            "domain:2gis.com.cy",
-            "domain:2gis.cz",
-            "domain:2gis.ge",
-            "domain:2gis.kg",
-            "domain:2gis.kz",
-            "domain:2gis.tj",
-            "domain:2gis.ua",
-            "domain:2gis.uz",
             "full:st-ok-pts.cdn-vk.ru",
             "full:st-ok.cdn-vk.ru",
             "domain:ozon.by",
@@ -1027,7 +840,6 @@
             "domain:4meeting.me",
             "domain:5ka.ru",
             "domain:5post.market",
-            "domain:742231.ms.ok.ru",
             "domain:8ofpsm7zqu.a.trbcdn.net",
             "domain:a.auth-nsdi.ru",
             "domain:a.res-nsdi.ru",
@@ -1037,7 +849,6 @@
             "domain:gov.ru",
             "domain:alformacap.com",
             "domain:alformacapital.com",
-            "domain:ams2-cdn.2gis.com",
             "domain:auth-nsdi.ru",
             "domain:auto.ru",
             "domain:av.ru",
@@ -1053,7 +864,6 @@
             "domain:boosty.to",
             "domain:bronevik.com",
             "domain:cdn-tinkoff.ru",
-            "domain:lemanapro.ru",
             "domain:oversecure.org",
             "domain:uxfeedback.ru",
             "domain:serverstats.ru",
@@ -1062,15 +872,12 @@
             "domain:chizhik.club",
             "domain:citydrive.ru",
             "domain:clstorage.net",
-            "domain:mts.ru",
             "domain:yadro.ru",
             "domain:credistory.ru",
             "domain:csat.ru",
             "domain:cscampus.ru",
-            "domain:d-assets.2gis.ru",
             "domain:d5de4k0ri8jba7ucdbt6.apigw.yandexcloud.net",
             "domain:dbo-dengi.online",
-            "domain:disk.2gis.com",
             "domain:dixy.ru",
             "domain:dnevnik.ru",
             "domain:dns-shop.ru",
@@ -1120,8 +927,6 @@
             "domain:miya-news.online",
             "domain:mm.ru",
             "domain:mnogolososya.ru",
-            "domain:mtscdn.ru",
-            "domain:mtsdengi.ru",
             "domain:myapelsin.ru",
             "domain:mymts.ru",
             "domain:netmonet.co",
@@ -1144,7 +949,6 @@
             "domain:rtbcdn.ru",
             "domain:russiacalling.com",
             "domain:rzd-bonus.ru",
-            "domain:s3.yandex.net",
             "domain:sbermarket.ru",
             "domain:sbermegamarket.ru",
             "domain:sbermobile.ru",
@@ -1163,7 +967,6 @@
             "domain:tnt-online.ru",
             "domain:tochka-tech.com",
             "domain:tochka.com",
-            "domain:top-fwz1.mail.ru",
             "domain:topdelivery.ru",
             "domain:trbcdn.net",
             "domain:tsx.x5static.net",
@@ -1213,15 +1016,24 @@
           "strategy": {
             "type": "leastLoad",
             "settings": {
+              "maxRTT": "3s",
               "expected": 2,
               "baselines": [
                 "800ms",
                 "2s"
-              ],
-              "tolerance": 0.3
+              ]
             }
           },
           "fallbackTag": "proxy"
+        },
+        {
+          "tag": "proxy_rr",
+          "selector": [
+            "proxy"
+          ],
+          "strategy": {
+            "type": "roundRobin"
+          }
         }
       ],
       "domainMatcher": "hybrid",
@@ -1273,7 +1085,7 @@
         "settings": {
           "vnext": [
             {
-              "address": "beijin.ispcamel.com",
+              "address": "retimne.ispcamel.com",
               "port": 443,
               "users": [
                 {
@@ -1288,14 +1100,14 @@
         "streamSettings": {
           "network": "grpc",
           "grpcSettings": {
-            "serviceName": "beijin.ispcamel.com",
+            "serviceName": "retimne.ispcamel.com",
             "authority": "",
             "mode": false
           },
           "security": "reality",
           "realitySettings": {
-            "serverName": "beijin.ispcamel.com",
-            "publicKey": "qp-Ix8nzD3cyee6hAyXBLED_tO_d5AxTwbbm2vF89EY",
+            "serverName": "retimne.ispcamel.com",
+            "publicKey": "s9bIAFSByOsdmPWZPdX7xXNJUH0uU5bFzJQ8sQfi9gg",
             "fingerprint": "firefox"
           }
         }
@@ -1438,44 +1250,6 @@
         "settings": {
           "vnext": [
             {
-              "address": "s14859.cdn.ngenix.net",
-              "port": 443,
-              "users": [
-                {
-                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
-                  "encryption": "none",
-                  "flow": ""
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/api/v4/gbrb",
-            "headers": {
-              "Host": "s14859.cdn.ngenix.net"
-            }
-          },
-          "security": "tls",
-          "tlsSettings": {
-            "serverName": "s14859.cdn.ngenix.net",
-            "fingerprint": "firefox",
-            "alpn": [
-              "h3",
-              "h2",
-              "http/1.1"
-            ]
-          }
-        }
-      },
-      {
-        "tag": "proxy-7",
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
               "address": "elecru.instrumentidlyadoma.com",
               "port": 443,
               "users": [
@@ -1504,340 +1278,7 @@
         }
       },
       {
-        "tag": "proxy-8",
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "s14859.cdn.ngenix.net",
-              "port": 443,
-              "users": [
-                {
-                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
-                  "encryption": "none",
-                  "flow": ""
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/api/v4/benten",
-            "headers": {
-              "Host": "s14859.cdn.ngenix.net"
-            }
-          },
-          "security": "none"
-        }
-      },
-      {
-        "tag": "proxy-9",
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "s14859.cdn.ngenix.net",
-              "port": 443,
-              "users": [
-                {
-                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
-                  "encryption": "none",
-                  "flow": ""
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/api/v4/bjcxeri",
-            "headers": {
-              "Host": "s14859.cdn.ngenix.net"
-            }
-          },
-          "security": "tls",
-          "tlsSettings": {
-            "serverName": "s14859.cdn.ngenix.net",
-            "fingerprint": "firefox",
-            "alpn": [
-              "h3",
-              "h2",
-              "http/1.1"
-            ]
-          }
-        }
-      },
-      {
-        "tag": "proxy-10",
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "s14859.cdn.ngenix.net",
-              "port": 443,
-              "users": [
-                {
-                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
-                  "encryption": "none",
-                  "flow": ""
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/api/v4/nbmdir",
-            "headers": {
-              "Host": "s14859.cdn.ngenix.net"
-            }
-          },
-          "security": "tls",
-          "tlsSettings": {
-            "serverName": "s14859.cdn.ngenix.net",
-            "fingerprint": "firefox",
-            "alpn": [
-              "h3",
-              "h2",
-              "http/1.1"
-            ]
-          }
-        }
-      },
-      {
-        "tag": "proxy-11",
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "s14859.cdn.ngenix.net",
-              "port": 443,
-              "users": [
-                {
-                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
-                  "encryption": "none",
-                  "flow": ""
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/api/v4/quczmb",
-            "headers": {
-              "Host": "s14859.cdn.ngenix.net"
-            }
-          },
-          "security": "tls",
-          "tlsSettings": {
-            "serverName": "s14859.cdn.ngenix.net",
-            "fingerprint": "firefox",
-            "alpn": [
-              "h3",
-              "h2",
-              "http/1.1"
-            ]
-          }
-        }
-      },
-      {
-        "tag": "proxy-12",
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "s14859.cdn.ngenix.net",
-              "port": 443,
-              "users": [
-                {
-                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
-                  "encryption": "none",
-                  "flow": ""
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/api/v4/rbvdce",
-            "headers": {
-              "Host": "s14859.cdn.ngenix.net"
-            }
-          },
-          "security": "tls",
-          "tlsSettings": {
-            "serverName": "s14859.cdn.ngenix.net",
-            "fingerprint": "firefox",
-            "alpn": [
-              "h3",
-              "h2",
-              "http/1.1"
-            ]
-          }
-        }
-      },
-      {
-        "tag": "proxy-13",
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "s14859.cdn.ngenix.net",
-              "port": 443,
-              "users": [
-                {
-                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
-                  "encryption": "none",
-                  "flow": ""
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/api/v4/mnkfie",
-            "headers": {
-              "Host": "s14859.cdn.ngenix.net"
-            }
-          },
-          "security": "tls",
-          "tlsSettings": {
-            "serverName": "s14859.cdn.ngenix.net",
-            "fingerprint": "firefox",
-            "alpn": [
-              "h3",
-              "h2",
-              "http/1.1"
-            ]
-          }
-        }
-      },
-      {
-        "tag": "proxy-14",
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "s14859.cdn.ngenix.net",
-              "port": 443,
-              "users": [
-                {
-                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
-                  "encryption": "none",
-                  "flow": ""
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/api/v4/ofeick",
-            "headers": {
-              "Host": "s14859.cdn.ngenix.net"
-            }
-          },
-          "security": "tls",
-          "tlsSettings": {
-            "serverName": "s14859.cdn.ngenix.net",
-            "fingerprint": "firefox",
-            "alpn": [
-              "h3",
-              "h2",
-              "http/1.1"
-            ]
-          }
-        }
-      },
-      {
-        "tag": "proxy-15",
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "s14859.cdn.ngenix.net",
-              "port": 443,
-              "users": [
-                {
-                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
-                  "encryption": "none",
-                  "flow": ""
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/api/v4/yrcbyg",
-            "headers": {
-              "Host": "s14859.cdn.ngenix.net"
-            }
-          },
-          "security": "tls",
-          "tlsSettings": {
-            "serverName": "s14859.cdn.ngenix.net",
-            "fingerprint": "firefox",
-            "alpn": [
-              "h3",
-              "h2",
-              "http/1.1"
-            ]
-          }
-        }
-      },
-      {
-        "tag": "proxy-16",
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "s14859.cdn.ngenix.net",
-              "port": 443,
-              "users": [
-                {
-                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
-                  "encryption": "none",
-                  "flow": ""
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "ws",
-          "wsSettings": {
-            "path": "/api/v4/roeifc",
-            "headers": {
-              "Host": "s14859.cdn.ngenix.net"
-            }
-          },
-          "security": "tls",
-          "tlsSettings": {
-            "serverName": "s14859.cdn.ngenix.net",
-            "fingerprint": "firefox",
-            "alpn": [
-              "h3",
-              "h2",
-              "http/1.1"
-            ]
-          }
-        }
-      },
-      {
-        "tag": "proxy-17",
+        "tag": "proxy-7",
         "protocol": "vless",
         "settings": {
           "vnext": [
@@ -1870,40 +1311,7 @@
         }
       },
       {
-        "tag": "proxy-18",
-        "protocol": "vless",
-        "settings": {
-          "vnext": [
-            {
-              "address": "beijin.ispcamel.com",
-              "port": 443,
-              "users": [
-                {
-                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
-                  "encryption": "none",
-                  "flow": ""
-                }
-              ]
-            }
-          ]
-        },
-        "streamSettings": {
-          "network": "grpc",
-          "grpcSettings": {
-            "serviceName": "beijin.ispcamel.com",
-            "authority": "",
-            "mode": false
-          },
-          "security": "reality",
-          "realitySettings": {
-            "serverName": "beijin.ispcamel.com",
-            "publicKey": "qp-Ix8nzD3cyee6hAyXBLED_tO_d5AxTwbbm2vF89EY",
-            "fingerprint": "firefox"
-          }
-        }
-      },
-      {
-        "tag": "proxy-19",
+        "tag": "proxy-8",
         "protocol": "vless",
         "settings": {
           "vnext": [
@@ -1932,105 +1340,16 @@
         }
       },
       {
-        "tag": "direct",
-        "protocol": "freedom",
-        "settings": {}
-      },
-      {
-        "tag": "block",
-        "protocol": "blackhole"
-      }
-    ],
-    "burstObservatory": {
-      "pingConfig": {
-        "timeout": "10s",
-        "interval": "60s",
-        "sampling": 3,
-        "httpMethod": "HEAD",
-        "destination": "https://cp.cloudflare.com/generate_204",
-        "connectivity": ""
-      },
-      "subjectSelector": [
-        "proxy"
-      ]
-    },
-    "remarks": "🛡️🇳🇱Белые Списки | Нидерланды🛡️",
-    "meta": {
-      "serverDescription": "🌟 При отключении LTE/4G 🌟"
-    }
-  },
-  {
-    "dns": {
-      "servers": [
-        "1.1.1.1",
-        "1.0.0.1"
-      ],
-      "queryStrategy": "UseIP"
-    },
-    "routing": {
-      "rules": [
-        {
-          "type": "field",
-          "protocol": [
-            "bittorrent"
-          ],
-          "outboundTag": "direct"
-        }
-      ],
-      "domainMatcher": "hybrid",
-      "domainStrategy": "IPIfNonMatch"
-    },
-    "inbounds": [
-      {
-        "tag": "socks",
-        "port": 10808,
-        "listen": "127.0.0.1",
-        "protocol": "socks",
-        "settings": {
-          "udp": true,
-          "auth": "noauth"
-        },
-        "sniffing": {
-          "enabled": true,
-          "routeOnly": false,
-          "destOverride": [
-            "http",
-            "tls",
-            "quic"
-          ]
-        }
-      },
-      {
-        "tag": "http",
-        "port": 10809,
-        "listen": "127.0.0.1",
-        "protocol": "http",
-        "settings": {
-          "allowTransparent": false
-        },
-        "sniffing": {
-          "enabled": true,
-          "routeOnly": false,
-          "destOverride": [
-            "http",
-            "tls",
-            "quic"
-          ]
-        }
-      }
-    ],
-    "outbounds": [
-      {
-        "tag": "proxy",
+        "tag": "proxy-9",
         "protocol": "vless",
         "settings": {
           "vnext": [
             {
-              "address": "beijin.ispcamel.com",
+              "address": "icedeluxe.ispcamel.com",
               "port": 443,
               "users": [
                 {
-                  "id": "9bf8a965-7df2-0064-ab59-9bc584f98a7a",
+                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
                   "encryption": "none",
                   "flow": ""
                 }
@@ -2041,27 +1360,116 @@
         "streamSettings": {
           "network": "grpc",
           "grpcSettings": {
-            "serviceName": "beijin.ispcamel.com",
+            "serviceName": "icedeluxe.ispcamel.com",
             "authority": "",
             "mode": false
           },
           "security": "reality",
           "realitySettings": {
-            "serverName": "beijin.ispcamel.com",
-            "publicKey": "qp-Ix8nzD3cyee6hAyXBLED_tO_d5AxTwbbm2vF89EY",
+            "serverName": "icedeluxe.ispcamel.com",
+            "publicKey": "OeGyys0cJNtofJ4uA2RXKebGe_pY-FtNNa02vYKaWmo",
+            "fingerprint": "firefox"
+          }
+        }
+      },
+      {
+        "tag": "proxy-10",
+        "protocol": "vless",
+        "settings": {
+          "vnext": [
+            {
+              "address": "seyhp.ispcamel.com",
+              "port": 443,
+              "users": [
+                {
+                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
+                  "encryption": "none",
+                  "flow": ""
+                }
+              ]
+            }
+          ]
+        },
+        "streamSettings": {
+          "network": "grpc",
+          "grpcSettings": {
+            "serviceName": "seyhp.ispcamel.com",
+            "authority": "",
+            "mode": false
+          },
+          "security": "reality",
+          "realitySettings": {
+            "serverName": "seyhp.ispcamel.com",
+            "publicKey": "hAg9dxmle8bZsPYo0h5kGlpSp2Rrcj5NiSia1STzsBA",
+            "fingerprint": "firefox"
+          }
+        }
+      },
+      {
+        "tag": "proxy-11",
+        "protocol": "vless",
+        "settings": {
+          "vnext": [
+            {
+              "address": "retimne.ispcamel.com",
+              "port": 443,
+              "users": [
+                {
+                  "id": "53b4f33c-ae1d-001e-be3d-fbb7adb4bfcf",
+                  "encryption": "none",
+                  "flow": ""
+                }
+              ]
+            }
+          ]
+        },
+        "streamSettings": {
+          "network": "grpc",
+          "grpcSettings": {
+            "serviceName": "retimne.ispcamel.com",
+            "authority": "",
+            "mode": false
+          },
+          "security": "reality",
+          "realitySettings": {
+            "serverName": "retimne.ispcamel.com",
+            "publicKey": "s9bIAFSByOsdmPWZPdX7xXNJUH0uU5bFzJQ8sQfi9gg",
             "fingerprint": "firefox"
           }
         }
       },
       {
         "tag": "direct",
-        "protocol": "freedom"
+        "protocol": "freedom",
+        "settings": {}
       },
       {
         "tag": "block",
         "protocol": "blackhole"
+      },
+      {
+        "tag": "dns-out",
+        "protocol": "dns",
+        "settings": {
+          "rules": [
+            {
+              "action": "hijack"
+            }
+          ]
+        }
       }
     ],
-    "remarks": "🇪🇺 Auto VPN"
+    "observatory": {
+      "probeUrl": "http://www.gstatic.com/generate_204",
+      "probeInterval": "2m",
+      "subjectSelector": [
+        "proxy"
+      ],
+      "enableConcurrency": true
+    },
+    "remarks": "🛡️🇳🇱Белые Списки | Нидерланды🛡️",
+    "meta": {
+      "serverDescription": "🌟 Только при белых списках 🌟"
+    }
   }
 ]
